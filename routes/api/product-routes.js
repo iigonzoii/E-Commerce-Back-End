@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
   router.get('/:id', async (req, res) => {
     try {
       const ProductData = await Product.findByPk(req.params.id, {
-        
+        // join with category using the ProductTag through table according to miniproject?
         include: [
           { model: Category},
           { model: Tag, through: ProductTag, as: 'product_tags' }
