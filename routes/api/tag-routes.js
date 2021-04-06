@@ -28,10 +28,10 @@ router.get('/:id', async (req, res) => {
   try {
     const singleTag = await Tag.findByPk(req.params.id
       , {
-      include: [{ model: Product
-        , through: "ProductTag"
-        , as: 'product_tags'
-       }]
+      // include: [{ model: Product
+      //   // , through: "ProductTag"
+      //   // , as: 'product_tags'
+      //  }]
     }
     );
 
