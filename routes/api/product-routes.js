@@ -1,17 +1,17 @@
-const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
-// ! heavy reference to miniproject from week 13 and my understanding is a one, maybe a two at best. just using the resources provided to the best of my ability to get this done. 
+const router = require("express").Router();
+const { Product, Category, Tag, ProductTag } = require("../../models");
+// ! heavy reference to miniproject from week 13 and my understanding is a one, maybe a two at best. just using the resources provided to the best of my ability to get this done.
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
     const ProductData = await Product.findAll({
       include: [
-        {model: Category},
-        {model: Tag, through: ProductTag, as: 'Product_tags'}
+        { model: Category },
+        { model: Tag, through: ProductTag, as: "Product_tags" },
       ],
     });
     res.status(200).json(ProductData);
@@ -22,33 +22,32 @@ router.get('/', async (req, res) => {
 
 // get one product
 // activity 28 - get a single traveller
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  router.get('/:id', async (req, res) => {
-    try {
-      const ProductData = await Product.findByPk(req.params.id, {
-        // join with category using the ProductTag through table according to miniproject?
-        include: [
-          { model: Category},
-          { model: Tag, through: ProductTag, as: 'product_tags' }
-        ]
-      });
-  
-      if (!ProductData) {
-        res.status(404).json({ message: 'No Product found with this id!' });
-        return;
-      }
-  
-      res.status(200).json(ProductData);
-    } catch (err) {
-      res.status(500).json(err);
+
+  try {
+    const ProductData = await Product.findByPk(req.params.id, {
+      // join with category using the ProductTag through table according to miniproject?
+      include: [
+        { model: Category },
+        { model: Tag, through: ProductTag, as: "product_tags" },
+      ],
+    });
+
+    if (!ProductData) {
+      res.status(404).json({ message: "No Product found with this id!" });
+      return;
     }
-  });
+
+    res.status(200).json(ProductData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -80,7 +79,7 @@ router.post('/', (req, res) => {
 });
 
 // update product
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -121,17 +120,17 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
   try {
     const ProductData = await Product.destroy({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     });
 
     if (!ProductData) {
-      res.status(404).json({ message: 'No product found with this id!' });
+      res.status(404).json({ message: "No product found with this id!" });
       return;
     }
 
