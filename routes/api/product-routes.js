@@ -9,9 +9,7 @@ router.get("/", async (req, res) => {
   // be sure to include its associated Category and Tag data
   try {
     const ProductData = await Product.findAll({
-      include: [
-        { model: Category },
-      ],
+      include: [{ model: Category }],
     });
     res.status(200).json(ProductData);
   } catch (err) {
@@ -21,7 +19,7 @@ router.get("/", async (req, res) => {
 
 // get one product
 // activity 28 - get a single traveller
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 
@@ -30,7 +28,7 @@ router.get("/:id", async (req, res) => {
       // join with category using the ProductTag through table according to miniproject?
       include: [
         { model: Category },
-        { model: Tag, through: ProductTag, as: "product_tags" },
+        // { model: Tag, through: ProductTag, as: "product_tags" },
       ],
     });
 

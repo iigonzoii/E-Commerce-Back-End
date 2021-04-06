@@ -9,9 +9,11 @@ router.get('/', async (req, res) => {
   // location routes activity28
   try {
     const allTags = await Tag.findAll({
-      include: [
-        { model: Product, through: ProductTag, as: 'all_tags' }
-      ],
+      // include: [
+      //   //  { model: Product
+      //   //   , through: ProductTag, as: 'all_tags' 
+      //   // }
+      // ],
     });
     res.status(200).json(allTags);
   } catch (err) {
