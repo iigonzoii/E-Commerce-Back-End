@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   // be sure to include its associated Category and Tag data
   try {
     const ProductData = await Product.findAll({
-      include: [{ model: Category }],
+      include: [{ model: Category, model:Tag }],
     });
     res.status(200).json(ProductData);
   } catch (err) {
@@ -26,12 +26,12 @@ router.get('/:id', async (req, res) => {
   try {
     const ProductData = await Product.findByPk(req.params.id, {
       // join with category using the ProductTag through table according to miniproject?
-      include: [
-        { model: Category },
+      include: 
+        Category 
         // { model: Tag}
         // , through: ProductTag, as: "product_tags" 
       // },
-      ],
+      
     });
 
     if (!ProductData) {
@@ -58,7 +58,7 @@ router.post("/", (req, res) => {
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.tagIds.length) {
+      if (req.body.tagIds) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
             product_id: product.id,
@@ -82,7 +82,7 @@ router.put("/:id", (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
-      id: req.params.id,
+      id: req.params.id.product_name
     },
   })
     .then((product) => {

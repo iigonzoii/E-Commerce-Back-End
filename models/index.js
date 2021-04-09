@@ -19,19 +19,19 @@ Category.hasMany(Product, {
 Product.belongsToMany(Tag, {
   through: {
     model: ProductTag,
-    unique: false
+    // unique: false
   },
   // just like making queries in mysql we are making a variable/alias with "as" 
-    as: 'product_tags'
+    // as: 'product_tags'
 });
 
 // Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Product, {
   through: {
     model: ProductTag,
-    unique: false
+    // unique: false
   },
-  as: 'tag_info'
+  // as: 'tag_info'
 });
 
 // we export multiple models together as an object so we can import them together and use their names as reference
